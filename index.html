@@ -858,8 +858,94 @@
     <p class="copyright">&copy; 2026 Sim7 Viagens</p>
   </footer>
 
+  <!-- ====== SUPABASE CDN ====== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
   <script>
+    /* ================================================
+       CONFIGURAÇÃO SUPABASE — COLE SUAS CREDENCIAIS AQUI
+       ================================================
+       1. Acesse https://supabase.com → crie um projeto
+       2. Vá em Settings → API
+       3. Copie a "URL" e a "anon public key"
+       4. Cole abaixo:
+    */
+    var SUPABASE_URL = 'https://lqsjmghjmpjlynlmtqgx.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_JJxm2JjCAESROq7_S69vog_idq_mOhk';
+
+    /* ================================================
+       TRACKING DE CLIQUES
+       ================================================ */
+    var sb = null;
+    if (SUPABASE_URL !== 'SUA_URL_AQUI' && typeof supabase !== 'undefined') {
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+
+    // Detecta plataforma amigável
+    function detectPlatform() {
+      var ua = navigator.userAgent;
+      if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
+      if (/Android/.test(ua)) return 'Android';
+      if (/Windows/.test(ua)) return 'Windows';
+      if (/Mac/.test(ua)) return 'macOS';
+      if (/Linux/.test(ua)) return 'Linux';
+      return 'Outro';
+    }
+
+    // Detecta navegador
+    function detectBrowser() {
+      var ua = navigator.userAgent;
+      if (/CriOS/.test(ua)) return 'Chrome (iOS)';
+      if (/FxiOS/.test(ua)) return 'Firefox (iOS)';
+      if (/EdgA|Edg\//.test(ua)) return 'Edge';
+      if (/OPR|Opera/.test(ua)) return 'Opera';
+      if (/Chrome/.test(ua) && !/Chromium/.test(ua)) return 'Chrome';
+      if (/Safari/.test(ua) && !/Chrome/.test(ua)) return 'Safari';
+      if (/Firefox/.test(ua)) return 'Firefox';
+      return 'Outro';
+    }
+
+    // Extrai nome legível do botão
+    function getButtonName(el) {
+      // Procura o texto do botão
+      var textEl = el.querySelector('.btn-text') || el.querySelector('.product-name') || el;
+      var name = textEl.textContent.trim();
+      // Para social links, usa o aria-label
+      if (!name || name.length < 2) name = el.getAttribute('aria-label') || 'Desconhecido';
+      return name;
+    }
+
+    // Envia clique para o Supabase
+    function trackClick(el) {
+      if (!sb) return;
+      var data = {
+        button_name: getButtonName(el),
+        button_url: el.href || '',
+        user_agent: navigator.userAgent,
+        browser: detectBrowser(),
+        language: navigator.language,
+        referrer: document.referrer || '',
+        screen_width: screen.width,
+        screen_height: screen.height,
+        platform: detectPlatform()
+      };
+      // Envia async — não bloqueia o clique
+      sb.from('clicks').insert([data]).then(function(){}).catch(function(){});
+    }
+
+    /* ================================================
+       INICIALIZAÇÃO E ANIMAÇÕES
+       ================================================ */
     document.addEventListener('DOMContentLoaded', function () {
+
+      // ====== TRACKING: escuta cliques em todos os botões/links ======
+      var trackables = document.querySelectorAll('.btn, .product-card, .btn-ver-todos, .social-links a');
+      trackables.forEach(function (el) {
+        el.addEventListener('click', function () {
+          trackClick(el);
+        });
+      });
+
       // Animação staggered dos botões
       var botoes = document.querySelectorAll('#panelLinks .btn');
       botoes.forEach(function (btn, i) {
@@ -875,24 +961,20 @@
         btn.addEventListener('click', function () {
           var tab = btn.dataset.tab;
 
-          // Atualizar botões
           tabBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
           btn.classList.add('active');
           btn.setAttribute('aria-selected', 'true');
 
-          // Mover slider
           if (tab === 'servicos') {
             slider.classList.add('right');
           } else {
             slider.classList.remove('right');
           }
 
-          // Trocar painel
           panels.forEach(function (p) { p.classList.remove('active'); });
           var target = tab === 'links' ? document.getElementById('panelLinks') : document.getElementById('panelServicos');
           target.classList.add('active');
 
-          // Animar itens do painel ativo
           var items = target.querySelectorAll('.btn, .product-card, .btn-ver-todos');
           items.forEach(function (item, i) {
             item.classList.remove('visible');
