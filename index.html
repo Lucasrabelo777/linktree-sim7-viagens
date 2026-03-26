@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0077B6">
+  <title>Sim7 Viagens — Seu Receptivo no Ceará</title>
+
+  <!-- ====== META TAGS OPEN GRAPH (editar og:image com URL real da imagem) ====== -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sim7 Viagens — Seu Receptivo no Ceará">
+  <meta property="og:description" content="Pacotes, transfers, passeios, hospedagens e ingressos em Fortaleza, Jericoacoara e Canoa Quebrada. Travellers Choice TripAdvisor 2020-2024.">
+  <meta property="og:image" content="https://reservas.sim7viagens.com/og-image.jpg">
+  <meta property="og:url" content="https://sim7viagens.com">
+  <meta name="description" content="Sim7 Viagens — Pacotes, transfers, passeios, hospedagens e ingressos no Ceará.">
+
+  <!-- ====== FAVICON INLINE (S7 estilizado) ====== -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230077B6'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='14' fill='white'%3ES7%3C/text%3E%3C/svg%3E">
+
+  <!-- ====== GOOGLE FONTS ====== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================
+       CSS CUSTOM PROPERTIES — editar cores aqui
+       ================================================ */
+    :root {
+      --azul: #0077B6;
+      --azul-escuro: #023E8A;
+      --azul-light: #E8F4FD;
+      --azul-soft: #F0F7FC;
+      --verde-whatsapp: #25D366;
+      --verde-whatsapp-dark: #1EBE5A;
+      --dourado: #F4A261;
+      --texto: #1A1A2E;
+      --texto-sub: #5A6275;
+      --texto-light: #8892A5;
+      --bg: #FFFFFF;
+      --card-bg: #F5F7FA;
+      --card-border: #E8ECF1;
+      --glass-border: rgba(0, 119, 182, 0.12);
+      --raio: 14px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ================================================
+       RESET E BASE
+       ================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      color: var(--texto);
+      background: var(--bg);
+      overflow-x: hidden;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    /* ================================================
+       CONTAINER
+       ================================================ */
+    .container {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 0 18px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ================================================
+       BLOCO 1 — HEADER COM FUNDO AZUL
+       ================================================ */
+    .header-bg {
+      width: 100%;
+      background: linear-gradient(160deg, var(--azul-escuro) 0%, var(--azul) 100%);
+      padding-bottom: 36px;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .header-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: var(--bg);
+      border-radius: 24px 24px 0 0;
+    }
+
+    .header {
+      text-align: center;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 20px 18px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ====== LOGO ====== */
+    .logo {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+      margin: 0 auto 8px;
+      display: block;
+      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.2));
+    }
+
+    .tagline {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ================================================
+       MARQUEE DE SERVIÇOS (scroll horizontal automático)
+       ================================================ */
+    .marquee-wrapper {
+      width: 100%;
+      overflow: hidden;
+      padding: 6px 0 8px;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 8px;
+      width: max-content;
+      animation: marquee 18s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .service-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--azul-light);
+      color: var(--azul);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 119, 182, 0.1);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .service-tag svg {
+      flex-shrink: 0;
+    }
+
+    /* ================================================
+       TABS (Links / Serviços)
+       ================================================ */
+    .tabs {
+      display: flex;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 9px 0;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--texto-sub);
+      background: none;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: color 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .tab-btn.active {
+      color: var(--azul);
+    }
+
+    .tab-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background: var(--bg);
+      border-radius: 9px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+    }
+
+    .tab-slider.right {
+      transform: translateX(100%);
+    }
+
+    /* Painéis das abas */
+    .tab-panel {
+      display: none;
+      width: 100%;
+    }
+    .tab-panel.active {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ================================================
+       CARDS DE SERVIÇOS (aba Serviços)
+       ================================================ */
+    /* ================================================
+       CARDS DE PRODUTO (aba Serviços) — grid 2 colunas
+       ================================================ */
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--raio);
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      text-decoration: none;
+      color: var(--texto);
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--azul);
+    }
+
+    .product-card:active {
+      transform: scale(0.97);
+      transition-duration: 0.1s;
+    }
+
+    /* ====== IMAGEM DO PRODUTO (trocar src pela imagem real) ====== */
+    .product-img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, var(--azul-light), #d0e8f5);
+    }
+
+    .product-info {
+      padding: 10px 10px 12px;
+    }
+
+    .product-name {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 4px;
+      color: var(--texto);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-price {
+      font-size: 10.5px;
+      color: var(--texto-sub);
+      font-weight: 400;
+    }
+
+    .product-price strong {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--azul);
+    }
+
+    .product-badge {
+      display: inline-block;
+      background: var(--verde-whatsapp);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Botão "Ver todos" abaixo do grid */
+    .btn-ver-todos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--raio);
+      background: var(--azul);
+      color: #fff;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-top: 4px;
+    }
+    .btn-ver-todos:hover {
+      background: var(--azul-escuro);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ================================================
+       BLOCO 2 — BOTÕES
+       ================================================ */
+    .buttons {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Base de todos os botões */
+    .btn {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: var(--raio);
+      text-decoration: none;
+      font-family: inherit;
+      font-weight: 500;
+      font-size: 13.5px;
+      color: var(--texto);
+      position: relative;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.015);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+      transition-duration: 0.1s;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--azul);
+      outline-offset: 2px;
+    }
+
+    .btn-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    .btn-text {
+      flex: 1;
+    }
+
+    /* Seta de link */
+    .btn::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid rgba(0, 0, 0, 0.2);
+      border-top: 1.5px solid rgba(0, 0, 0, 0.2);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      margin-left: 8px;
+      transition: border-color 0.2s ease;
+    }
+    .btn:hover::after {
+      border-color: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Animação de entrada */
+    .btn.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn.visible:hover { transform: translateY(-2px) scale(1.015); }
+
+    /* ====== BOTÃO 1: WHATSAPP — CTA Principal ====== */
+    .btn--whatsapp {
+      background: linear-gradient(135deg, var(--verde-whatsapp), var(--verde-whatsapp-dark));
+      color: #FFFFFF;
+      padding: 15px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    .btn--whatsapp .btn-icon { background: rgba(255, 255, 255, 0.2); }
+    .btn--whatsapp::after { border-color: rgba(255, 255, 255, 0.5); }
+    .btn--whatsapp:hover::after { border-color: rgba(255, 255, 255, 0.8); }
+    .btn--whatsapp:hover { box-shadow: 0 8px 28px rgba(37, 211, 102, 0.4); }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25); }
+      50%      { box-shadow: 0 4px 28px rgba(37, 211, 102, 0.45); }
+    }
+
+    /* ====== BOTÃO 2: RESERVAS ====== */
+    .btn--reservas {
+      background: linear-gradient(135deg, var(--azul), var(--azul-escuro));
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(0, 119, 182, 0.25);
+    }
+    .btn--reservas .btn-icon { background: rgba(255, 255, 255, 0.15); }
+    .btn--reservas::after { border-color: rgba(255, 255, 255, 0.4); }
+    .btn--reservas:hover::after { border-color: rgba(255, 255, 255, 0.7); }
+    .btn--reservas:hover { box-shadow: 0 8px 24px rgba(0, 119, 182, 0.35); }
+
+    /* ====== BOTÃO 3: SUPORTE ====== */
+    .btn--suporte {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+    .btn--suporte .btn-icon { background: var(--azul-light); color: var(--azul); }
+    .btn--suporte:hover {
+      background: #EDF0F5;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ====== BOTÃO 4: PARCEIRO ====== */
+    .btn--parceiro {
+      background: var(--bg);
+      border: 1.5px solid var(--card-border);
+    }
+    .btn--parceiro .btn-icon { background: var(--card-bg); color: var(--texto-sub); }
+    .btn--parceiro:hover {
+      border-color: var(--azul);
+      background: var(--azul-soft);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ====== BOTÃO 5: INDIQUE E GANHE ====== */
+    .btn--indique {
+      background: linear-gradient(135deg, #FFF5EB, #FEF0E0);
+      border: 1px solid rgba(244, 162, 97, 0.2);
+    }
+    .btn--indique .btn-icon { background: rgba(244, 162, 97, 0.15); color: var(--dourado); }
+    .btn--indique:hover {
+      border-color: rgba(244, 162, 97, 0.4);
+      box-shadow: 0 4px 16px rgba(244, 162, 97, 0.15);
+    }
+    .btn--indique .tag {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* ====== BOTÃO 6: EMAIL ====== */
+    .btn--email {
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      color: var(--texto-sub);
+      font-weight: 400;
+      font-size: 13px;
+    }
+    .btn--email .btn-icon { background: var(--card-bg); color: var(--texto-light); }
+    .btn--email:hover {
+      border-color: #C5CCD6;
+      color: var(--texto);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ================================================
+       BLOCO 3 — FOOTER
+       ================================================ */
+    .footer {
+      text-align: center;
+      padding: 14px 18px;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--texto-sub);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .social-links a:hover {
+      background: var(--azul-light);
+      border-color: var(--glass-border);
+      color: var(--azul);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .social-links a:focus-visible {
+      outline: 2px solid var(--azul);
+      outline-offset: 2px;
+    }
+
+    .copyright {
+      font-size: 10.5px;
+      color: var(--texto-light);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    /* ================================================
+       ANIMAÇÕES
+       ================================================ */
+    .header { animation: fadeIn 0.5s ease both; }
+    .marquee-wrapper { animation: fadeIn 0.5s ease 0.15s both; }
+    .tabs { animation: fadeIn 0.4s ease 0.2s both; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================
+       HEADER COM FUNDO AZUL (logo + tagline)
+       ================================================ -->
+  <div class="header-bg">
+    <header class="header">
+      <!-- ====== LOGO: trocar o src abaixo pelo caminho real da logo ====== -->
+      <img src="logo-sim7.png" alt="Sim7 Viagens" class="logo">
+
+      <p class="tagline">Seu Receptivo no Ceará — Fortaleza / Jericoacoara</p>
+      <span class="badge" aria-label="Premiação Travellers Choice TripAdvisor 2020 a 2025">🏆 Travellers' Choice 2020–2025</span>
+    </header>
+  </div>
+
+  <div class="container">
+
+    <!-- ================================================
+         MARQUEE DE SERVIÇOS (scroll automático)
+         ================================================ -->
+    <div class="marquee-wrapper" aria-label="Nossos serviços">
+      <div class="marquee-track">
+        <!-- Conjunto 1 (original) -->
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1"/><polygon points="12 15 17 21 7 21 12 15"/></svg> Transfers</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/></svg> Passeios</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg> Pacotes</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M12 4v16"/></svg> Ingressos</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg> Hospedagens</span>
+
+        <!-- Conjunto 2 (duplicado para loop contínuo) -->
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1"/><polygon points="12 15 17 21 7 21 12 15"/></svg> Transfers</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/></svg> Passeios</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg> Pacotes</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M12 4v16"/></svg> Ingressos</span>
+        <span class="service-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg> Hospedagens</span>
+
+      </div>
+    </div>
+
+    <!-- ================================================
+         TABS — Links / Serviços
+         ================================================ -->
+    <div class="tabs" role="tablist">
+      <div class="tab-slider" id="tabSlider"></div>
+      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="links" id="tabLinks">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        Links
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="servicos" id="tabServicos">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>
+        Serviços
+      </button>
+    </div>
+
+    <!-- ====== PAINEL: LINKS ====== -->
+    <div class="tab-panel active" id="panelLinks" role="tabpanel">
+
+      <!-- ====== BOTÃO 1: WHATSAPP (editar link e texto abaixo) ====== -->
+      <a href="https://wa.me/5585999190565?text=Ol%C3%A1+Sim7+Viagens%21"
+         class="btn btn--whatsapp"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Fale com a gente no WhatsApp">
+        <div class="btn-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.01a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374A9.86 9.86 0 012.15 12.04C2.15 6.58 6.59 2.14 12.06 2.14c2.66 0 5.16 1.036 7.04 2.919a9.88 9.88 0 012.91 7.038c-.003 5.462-4.443 9.902-9.96 9.902zM20.52 3.449C18.24 1.226 15.24 0 12.05 0 5.464 0 .104 5.36.101 11.95a11.92 11.92 0 001.595 5.971L0 24l6.233-1.636a11.95 11.95 0 005.712 1.456h.005c6.585 0 11.946-5.36 11.95-11.95a11.88 11.88 0 00-3.498-8.452z"/>
+          </svg>
+        </div>
+        <span class="btn-text">Fale com a gente no WhatsApp</span>
+      </a>
+
+      <!-- ====== BOTÃO 2: RESERVAS ONLINE (editar link e texto abaixo) ====== -->
+      <a href="http://reservas.sim7viagens.com"
+         class="btn btn--reservas"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Faça sua reserva online">
+        <div class="btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+          </svg>
+        </div>
+        <span class="btn-text">Faça sua reserva online</span>
+      </a>
+
+      <!-- ====== BOTÃO 3: SUPORTE / JÁ TEM RESERVA (editar link e texto abaixo) ====== -->
+      <a href="https://wa.link/919u4q"
+         class="btn btn--suporte"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Já tem uma reserva? Fale conosco">
+        <div class="btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 18v-6a9 9 0 0118 0v6"/>
+            <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/>
+          </svg>
+        </div>
+        <span class="btn-text">Já tem uma reserva? Fale conosco</span>
+      </a>
+
+      <!-- ====== BOTÃO 4: SEJA PARCEIRO (editar link e texto abaixo) ====== -->
+      <a href="https://wa.me/message/SLACV3FGAZDKE1"
+         class="btn btn--parceiro"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Seja um parceiro da Sim7">
+        <div class="btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 11.5L17 8l-4.5 1L9 5.5 3.5 11l3.97 3.97"/>
+            <path d="M7.47 14.97l3.56 3.56a1 1 0 001.41 0l.71-.71a1 1 0 000-1.41"/>
+            <path d="M11.73 18.32l1.77 1.77a1 1 0 001.41 0l.71-.71a1 1 0 000-1.41"/>
+            <path d="M15.2 16.39l.71.71a1 1 0 001.41 0l.71-.71a1 1 0 000-1.41l-3.56-3.56"/>
+            <path d="M20.5 6.5L17 10"/>
+          </svg>
+        </div>
+        <span class="btn-text">Seja um parceiro da Sim7</span>
+      </a>
+
+      <!-- ====== BOTÃO 5: INDIQUE E GANHE (editar link e texto abaixo) ====== -->
+      <a href="https://indiqueeganhesim7.my.canva.site/sem-nome-1080-x-1920-px"
+         class="btn btn--indique"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Programa Indique e Ganhe">
+        <div class="btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="8" width="18" height="4" rx="1"/>
+            <path d="M12 8v13"/>
+            <path d="M19 12v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7"/>
+            <path d="M7.5 8a2.5 2.5 0 010-5C9 3 12 8 12 8"/>
+            <path d="M16.5 8a2.5 2.5 0 000-5C15 3 12 8 12 8"/>
+          </svg>
+        </div>
+        <span class="btn-text">Indique e Ganhe</span>
+        <span class="tag" aria-hidden="true">💰</span>
+      </a>
+
+      <!-- ====== BOTÃO 6: EMAIL (editar endereço abaixo) ====== -->
+      <a href="mailto:reservas@sim7viagens.com"
+         class="btn btn--email"
+         aria-label="Enviar email para reservas@sim7viagens.com">
+        <div class="btn-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M22 7l-10 7L2 7"/>
+          </svg>
+        </div>
+        <span class="btn-text">Nosso Email</span>
+      </a>
+
+    </div>
+
+    <!-- ====== PAINEL: SERVIÇOS (editar links abaixo) ====== -->
+    <!-- ====== PAINEL: SERVIÇOS — Cards de Produto ====== -->
+    <!-- Para trocar as imagens: substitua o src de cada <img> pela URL real da foto -->
+    <div class="tab-panel" id="panelServicos" role="tabpanel">
+
+      <div class="products-grid">
+
+        <!-- ====== PRODUTO 1: TRANSFER AEROPORTO (editar imagem, nome, preço e link) ====== -->
+        <a href="http://reservas.sim7viagens.com" class="product-card" target="_blank" rel="noopener noreferrer">
+          <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=250&fit=crop" alt="Transfer Aeroporto" class="product-img">
+          <div class="product-info">
+            <span class="product-badge">MAIS VENDIDO</span>
+            <div class="product-name">Transfer Aeroporto → Hotel</div>
+            <div class="product-price">a partir de <strong>R$ 59</strong></div>
+          </div>
+        </a>
+
+        <!-- ====== PRODUTO 2: PASSEIO JERICOACOARA (editar imagem, nome, preço e link) ====== -->
+        <a href="http://reservas.sim7viagens.com" class="product-card" target="_blank" rel="noopener noreferrer">
+          <img src="https://images.unsplash.com/photo-1626010454494-61f76e9e0d32?w=400&h=250&fit=crop" alt="Passeio Jericoacoara" class="product-img">
+          <div class="product-info">
+            <div class="product-name">Passeio Jericoacoara</div>
+            <div class="product-price">a partir de <strong>R$ 189</strong></div>
+          </div>
+        </a>
+
+        <!-- ====== PRODUTO 3: CANOA QUEBRADA (editar imagem, nome, preço e link) ====== -->
+        <a href="http://reservas.sim7viagens.com" class="product-card" target="_blank" rel="noopener noreferrer">
+          <img src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=400&h=250&fit=crop" alt="Canoa Quebrada" class="product-img">
+          <div class="product-info">
+            <div class="product-name">Passeio Canoa Quebrada</div>
+            <div class="product-price">a partir de <strong>R$ 139</strong></div>
+          </div>
+        </a>
+
+        <!-- ====== PRODUTO 4: BEACH PARK (editar imagem, nome, preço e link) ====== -->
+        <a href="http://reservas.sim7viagens.com" class="product-card" target="_blank" rel="noopener noreferrer">
+          <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=400&h=250&fit=crop" alt="Beach Park" class="product-img">
+          <div class="product-info">
+            <span class="product-badge">POPULAR</span>
+            <div class="product-name">Ingresso Beach Park</div>
+            <div class="product-price">a partir de <strong>R$ 260</strong></div>
+          </div>
+        </a>
+
+        <!-- ====== PRODUTO 5: PACOTE FORTALEZA (editar imagem, nome, preço e link) ====== -->
+        <a href="http://reservas.sim7viagens.com" class="product-card" target="_blank" rel="noopener noreferrer">
+          <img src="https://images.unsplash.com/photo-1614094082869-cd4e4b2f59f0?w=400&h=250&fit=crop" alt="Pacote Fortaleza" class="product-img">
+          <div class="product-info">
+            <div class="product-name">Pacote Fortaleza Completo</div>
+            <div class="product-price">a partir de <strong>R$ 499</strong></div>
+          </div>
+        </a>
+
+        <!-- ====== PRODUTO 6: HOSPEDAGEM (editar imagem, nome, preço e link) ====== -->
+        <a href="http://reservas.sim7viagens.com" class="product-card" target="_blank" rel="noopener noreferrer">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&h=250&fit=crop" alt="Hospedagem" class="product-img">
+          <div class="product-info">
+            <div class="product-name">Hospedagens em Fortaleza</div>
+            <div class="product-price">a partir de <strong>R$ 150</strong>/noite</div>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Botão "Ver todos os serviços" -->
+      <a href="http://reservas.sim7viagens.com" class="btn-ver-todos" target="_blank" rel="noopener noreferrer">
+        Ver todos os serviços
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- ================================================
+       BLOCO 3 — FOOTER
+       ================================================ -->
+  <footer class="footer">
+    <div class="social-links">
+      <!-- Instagram -->
+      <a href="https://instagram.com/sim7viagens" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="5"/>
+          <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@sim7_viagens" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.08a8.16 8.16 0 004.77 1.52V7.15a4.82 4.82 0 01-1.01-.46z"/>
+        </svg>
+      </a>
+      <!-- YouTube -->
+      <a href="https://www.youtube.com/@sim7tv" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 00.5 6.19 31.56 31.56 0 000 12a31.56 31.56 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.56 31.56 0 0024 12a31.56 31.56 0 00-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+        </svg>
+      </a>
+    </div>
+    <p class="copyright">&copy; 2026 Sim7 Viagens</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Animação staggered dos botões
+      var botoes = document.querySelectorAll('#panelLinks .btn');
+      botoes.forEach(function (btn, i) {
+        setTimeout(function () { btn.classList.add('visible'); }, 300 + i * 80);
+      });
+
+      // Tabs
+      var tabBtns = document.querySelectorAll('.tab-btn');
+      var panels = document.querySelectorAll('.tab-panel');
+      var slider = document.getElementById('tabSlider');
+
+      tabBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var tab = btn.dataset.tab;
+
+          // Atualizar botões
+          tabBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+
+          // Mover slider
+          if (tab === 'servicos') {
+            slider.classList.add('right');
+          } else {
+            slider.classList.remove('right');
+          }
+
+          // Trocar painel
+          panels.forEach(function (p) { p.classList.remove('active'); });
+          var target = tab === 'links' ? document.getElementById('panelLinks') : document.getElementById('panelServicos');
+          target.classList.add('active');
+
+          // Animar itens do painel ativo
+          var items = target.querySelectorAll('.btn, .product-card, .btn-ver-todos');
+          items.forEach(function (item, i) {
+            item.classList.remove('visible');
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(16px)';
+            setTimeout(function () {
+              item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              item.style.opacity = '1';
+              item.style.transform = 'translateY(0)';
+              item.classList.add('visible');
+            }, 50 + i * 60);
+          });
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
