@@ -339,6 +339,51 @@
     }
     .pagination button:hover { background: var(--azul-light); }
     .pagination button:disabled { opacity: 0.4; cursor: default; }
+
+    /* ====== CALENDÁRIO PERSONALIZADO ====== */
+    .date-range-wrapper {
+      display: none;
+      gap: 6px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .date-range-wrapper.active { display: flex; flex-wrap: wrap; }
+    .date-range-wrapper input[type="date"] {
+      padding: 5px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 500;
+      outline: none;
+      color-scheme: dark;
+    }
+    .date-range-wrapper input[type="date"]:focus {
+      border-color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.25);
+    }
+    .date-range-wrapper label {
+      font-size: 10px;
+      opacity: 0.8;
+      color: white;
+    }
+    .date-range-wrapper .btn-apply-date {
+      padding: 5px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .date-range-wrapper .btn-apply-date:hover {
+      background: rgba(255,255,255,0.35);
+    }
   </style>
 </head>
 <body>
@@ -359,14 +404,22 @@
     <h1>📊 Analytics — Sim7 Viagens</h1>
     <p>Painel de cliques do Linktree</p>
     <div class="header-actions">
-      <select id="filterPeriod" onchange="loadData()">
+      <select id="filterPeriod" onchange="onPeriodChange()">
         <option value="7">Últimos 7 dias</option>
         <option value="30" selected>Últimos 30 dias</option>
         <option value="90">Últimos 90 dias</option>
         <option value="all">Todo período</option>
+        <option value="custom">📅 Personalizado</option>
       </select>
       <button onclick="loadData()">⟳ Atualizar</button>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+    <div class="date-range-wrapper" id="dateRangeWrapper">
+      <label>De:</label>
+      <input type="date" id="dateFrom">
+      <label>Até:</label>
+      <input type="date" id="dateTo">
+      <button class="btn-apply-date" onclick="loadData()">Filtrar</button>
     </div>
   </header>
 
@@ -451,6 +504,24 @@
     var currentPage = 0;
     var pageSize = 30;
 
+    /* ====== PERÍODO PERSONALIZADO ====== */
+    function onPeriodChange() {
+      var period = document.getElementById('filterPeriod').value;
+      var wrapper = document.getElementById('dateRangeWrapper');
+      if (period === 'custom') {
+        wrapper.classList.add('active');
+        // Preencher datas padrão (últimos 30 dias)
+        var today = new Date();
+        var from = new Date();
+        from.setDate(from.getDate() - 30);
+        document.getElementById('dateTo').value = today.toISOString().split('T')[0];
+        document.getElementById('dateFrom').value = from.toISOString().split('T')[0];
+      } else {
+        wrapper.classList.remove('active');
+        loadData();
+      }
+    }
+
     /* ================================================
        LOGIN
        ================================================ */
@@ -490,16 +561,24 @@
       try {
         // Período
         var period = document.getElementById('filterPeriod').value;
-        var dateFilter = null;
-        if (period !== 'all') {
+        var dateFrom = null;
+        var dateTo = null;
+
+        if (period === 'custom') {
+          var fromVal = document.getElementById('dateFrom').value;
+          var toVal = document.getElementById('dateTo').value;
+          if (fromVal) dateFrom = new Date(fromVal + 'T00:00:00').toISOString();
+          if (toVal) dateTo = new Date(toVal + 'T23:59:59').toISOString();
+        } else if (period !== 'all') {
           var d = new Date();
           d.setDate(d.getDate() - parseInt(period));
-          dateFilter = d.toISOString();
+          dateFrom = d.toISOString();
         }
 
         // Buscar todos os cliques
         var query = sb.from('clicks').select('*').order('clicked_at', { ascending: false });
-        if (dateFilter) query = query.gte('clicked_at', dateFilter);
+        if (dateFrom) query = query.gte('clicked_at', dateFrom);
+        if (dateTo) query = query.lte('clicked_at', dateTo);
         var { data: clicks, error } = await query.limit(5000);
 
         if (error) throw error;
